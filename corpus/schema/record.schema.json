@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IBTRRS_CorpusRecord",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_id",
+    "language",
+    "category",
+    "diagnostic",
+    "buggy_snippet",
+    "fixed_snippet",
+    "explanation",
+    "provenance",
+    "license",
+    "quality",
+    "split"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0"]
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+-[0-9]{4}$"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["python"]
+    },
+    "category": {
+      "type": "string"
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["source", "code", "message_pattern"],
+      "properties": {
+        "source": { "type": "string", "enum": ["pyright", "pylance", "ruff", "flake8"] },
+        "code": { "type": "string" },
+        "message_pattern": { "type": "string" }
+      }
+    },
+    "buggy_snippet": {
+      "type": "string",
+      "maxLength": 8192
+    },
+    "fixed_snippet": {
+      "type": "string",
+      "maxLength": 8192
+    },
+    "explanation": {
+      "type": "string",
+      "maxLength": 2048
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["origin", "author", "created"],
+      "properties": {
+        "origin": { "type": "string", "enum": ["authored"] },
+        "author": { "type": "string" },
+        "source_url": { "type": ["string", "null"] },
+        "created": { "type": "string", "format": "date" }
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["spdx", "basis"],
+      "properties": {
+        "spdx": { "type": "string", "enum": ["CC0-1.0"] },
+        "basis": { "type": "string" }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": ["status", "reviewer"],
+      "properties": {
+        "status": { "type": "string", "enum": ["reviewed"] },
+        "reviewer": { "type": "string" },
+        "fix_verified_by": { "type": "string" },
+        "verification_command": { "type": "string" }
+      }
+    },
+    "split": {
+      "type": "string",
+      "enum": ["dev", "eval"]
+    },
+    "secret_scan": {
+      "type": "string",
+      "enum": ["passed"]
+    }
+  },
+  "additionalProperties": false
+}
+

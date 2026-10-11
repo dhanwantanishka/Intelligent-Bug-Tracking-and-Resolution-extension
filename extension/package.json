@@ -1,0 +1,62 @@
+{
+  "name": "ibtrrs-vscode",
+  "displayName": "IBTRRS - Intelligent Bug Resolution",
+  "description": "Deterministic quick fixes and AI-reviewed resolution diffs for Python in VS Code.",
+  "version": "0.1.0",
+  "publisher": "ibtrrs",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ibtrrs.recommendResolution",
+        "title": "IBTRRS: Recommend Resolution"
+      },
+      {
+        "command": "ibtrrs.clearSessionHistory",
+        "title": "IBTRRS: Clear Session History"
+      }
+    ],
+    "configuration": {
+      "title": "IBTRRS",
+      "properties": {
+        "ibtrrs.ai.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable AI-powered resolution recommendations. When disabled, only local deterministic quick fixes are provided."
+        },
+        "ibtrrs.backend.url": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "URL of the local IBTRRS backend service."
+        },
+        "ibtrrs.token.path": {
+          "type": "string",
+          "default": "",
+          "description": "Optional custom path to the backend bearer token file."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}
+
